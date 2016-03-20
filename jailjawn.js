@@ -3,6 +3,7 @@ var http = require('http'),
 	url = require('url'),
 	Firebase = require('firebase'),
 	port = process.env.PORT || 8080,
+	host = process.env.PORT ? '0.0.0.0' : '127.0.0.1',
 	data;
 	
 var firebase = new Firebase("https://burning-heat-7610.firebaseio.com/")
@@ -33,7 +34,7 @@ http.createServer(function(req,res){
 		res.write(JSON.stringify(response));
 		res.end();
 	
-}).listen(port)
+}).listen(port, host)
 
 function formatDateChart(data){
     //type checking
