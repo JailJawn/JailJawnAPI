@@ -8,6 +8,8 @@
 
 `https://jailjawnapi.herokuapp.com/prison_totals` displays prison populations over time
 
+Any other request returns usage information. 
+
 ## Installation
 
 #### Prereqs: Node 

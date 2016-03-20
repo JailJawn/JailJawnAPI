@@ -1,21 +1,24 @@
 "use strict";
+//Node (Also ES6) introduces the idea of modules 
+//HTTP and URL are first party libraries
 var http = require('http'),
 	url = require('url'),
-	Firebase = require('firebase'),
-	port = process.env.PORT || 8080,
-	host = process.env.PORT ? '0.0.0.0' : '127.0.0.1',
-	data;
+	Firebase = require('firebase'),	//Firebase node API
+	port = process.env.PORT || 8080, //.env package keeps configuration variables out of source code (heroku also uses them to set config)
+	host = process.env.PORT ? '0.0.0.0' : '127.0.0.1',	//some heroku config
+	data; //initalize data var to store database info 
 	
-var firebase = new Firebase("https://burning-heat-7610.firebaseio.com/")
-firebase.on("value", function(snapshot){
-	data = snapshot.val()
+var firebase = new Firebase("https://burning-heat-7610.firebaseio.com/"); //connect to firebase
+firebase.on("value", function(snapshot){ // when it recieves a response, execute this anon. function
+	data = snapshot.val() // set data var to the value returned by firebase
 })
-
+//create server... creates a server. It takes a request and a response
 http.createServer(function(req,res){
-	var reqUrl = url.parse(req.url), 
-		formattedUrl = reqUrl.path.replace('/',""),
-		response;
-	
+	var reqUrl = url.parse(req.url), //parse the URL (it shows what comes after the host name eg: /login)
+		formattedUrl = reqUrl.path.replace('/',""), //replace / with nothing ""
+		response; // instantiate response variable 
+		
+		//decide what response to send
 		switch(formattedUrl){
 			case "all":
 				response = data;
@@ -30,12 +33,14 @@ http.createServer(function(req,res){
 				response = "Usage: /all, /daily_totals, /prison_totals";
 				break;
 		}
+		//need to write CORS header
 		res.writeHeader(200, {'Access-Control-Allow-Origin': "*", 'Access-Control-Allow-Methods': 'GET', "Access-Control-Allow-Headers": "X-Requested-With, Access-Control-Allow-Origin, X-HTTP-Method-Override, Content-Type, Authorization, Accept", "Content-Type" : "text/html"});
+		//res has to send a string -- stringify the json
 		res.write(JSON.stringify(response));
 		res.end();
 	
 }).listen(port, host)
-
+//format functions copied from the front-end app 
 function formatDateChart(data){
     //type checking
     if(!data){
