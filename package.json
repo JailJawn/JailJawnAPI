@@ -4,7 +4,7 @@
   "description": "Node API for JailJawn",
   "main": "jailjawn.js",
   "scripts": {
-	  "start": "node server.js"
+	  "start": "node jailjawn.js"
   },
   "author": "Kevin Diem",
   "license": "ISC",
