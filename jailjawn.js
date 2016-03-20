@@ -30,7 +30,7 @@ http.createServer(function(req,res){
 				response = "Usage: /all, /daily_totals, /prison_totals";
 				break;
 		}
-		res.writeHeader(200, {'Access-Control-Allow-Origin': "*", 'Access-Control-Allow-Methods': 'GET', "Content-Type" : "text/html"});
+		res.writeHeader(200, {'Access-Control-Allow-Origin': "*", 'Access-Control-Allow-Methods': 'GET', "Access-Control-Allow-Headers": "X-Requested-With, Access-Control-Allow-Origin, X-HTTP-Method-Override, Content-Type, Authorization, Accept", "Content-Type" : "text/html"});
 		res.write(JSON.stringify(response));
 		res.end();
 	
